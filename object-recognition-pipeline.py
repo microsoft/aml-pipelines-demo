@@ -22,7 +22,6 @@ data_ingestion_step, data_ingestion_outputs = data_ingestion_step(datastore_root
 # Step 2: Data preprocessing step
 data_preprocess_step = data_preprocess_step(data_ingestion_outputs[0], cpu_compute_target)
 
+# Submit pipeline
 pipeline = Pipeline(workspace=workspace, steps=[data_ingestion_step, data_preprocess_step])
 pipeline_run = Experiment(workspace, 'object-recognition-pipeline').submit(pipeline)
-
-#os.path.dirname(os.path.abspath(__file__))
