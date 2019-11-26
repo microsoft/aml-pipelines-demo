@@ -1,19 +1,16 @@
 import os
 import requests
 import argparse
-import pandas as pd
 from time_util import time_limit
 
 # Define arguments
 parser = argparse.ArgumentParser(description='Web scraping arg parser')
-parser.add_argument('--root_dir', type=str, help='Root directory of datastore')
-parser.add_argument('--raw_data_dir', type=str, help='Directory to store output raw data')
+parser.add_argument('--output_dir', type=str, help='Directory to store output raw data')
 parser.add_argument('--num_images', type=int, help='Number of images per class')
 args = parser.parse_args()
 
 # Get arguments from parser
-root_dir = args.root_dir
-raw_data_dir = args.raw_data_dir
+output_dir = args.output_dir
 num_images = args.num_images
 
 # Set search headers and URL
@@ -27,14 +24,10 @@ search_url = 'https://eastus.api.cognitive.microsoft.com/bing/v7.0/images/search
 # Define classes
 classes = ['airpane', 'automobile', 'bird', 'cat', 'ship']
 
-# Write classes file 
-classes_df = pd.DataFrame(classes)
-classes_df.to_csv(os.path.join(root_dir, 'classes.txt'), index=False)
-
 # Make query for each class and download images
 for name in classes:
 
-    dir_name = os.path.join(raw_data_dir, name)
+    dir_name = os.path.join(output_dir, name)
     if not os.path.exists(dir_name):
         os.makedirs(dir_name)
     
