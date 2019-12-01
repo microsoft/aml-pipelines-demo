@@ -22,7 +22,7 @@ subscription_key = os.environ['COGNITIVE_SERVICES_API_KEY']
 search_url = 'https://eastus.api.cognitive.microsoft.com/bing/v7.0/images/search'
 
 # Define classes
-classes = ['airpane', 'automobile', 'bird', 'cat', 'ship']
+classes = ['airplane', 'automobile', 'bird', 'cat', 'ship']
 
 # Make query for each class and download images
 for name in classes:
