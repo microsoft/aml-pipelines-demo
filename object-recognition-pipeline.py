@@ -5,6 +5,7 @@ from azureml.data.data_reference import DataReference
 from modules.ingestion.data_ingestion_step import data_ingestion_step
 from modules.preprocess.data_preprocess_step import data_preprocess_step
 from modules.train.train_step import train_step
+from modules.evaluate.evaluate_step import evaluate_step
 
 # Get workspace, datastores, and compute targets
 workspace = Workspace.from_config()
@@ -22,7 +23,10 @@ data_ingestion_step, data_ingestion_outputs = data_ingestion_step(datastore, cpu
 data_preprocess_step, data_preprocess_outputs = data_preprocess_step(data_ingestion_outputs[0], cpu_compute_target)
 
 # Step 3: Training step
-train_step, train_step_outputs = train_step(data_preprocess_outputs[0], data_preprocess_outputs[1], gpu_compute_target)
+train_step, train_outputs = train_step(data_preprocess_outputs[0], data_preprocess_outputs[1], gpu_compute_target)
+
+# Step 4: Evaluate step
+evaluate_step, evaluate_outputs = evaluate_step(train_outputs[0], data_preprocess_outputs[2], gpu_compute_target)
 
 # Submit pipeline
 pipeline_parameters = {
@@ -33,5 +37,5 @@ pipeline_parameters = {
     'learning_rate': 0.001, 
     'momentum': 0.9
 }
-pipeline = Pipeline(workspace=workspace, steps=[data_ingestion_step, data_preprocess_step, train_step])
+pipeline = Pipeline(workspace=workspace, steps=[data_ingestion_step, data_preprocess_step, train_step, evaluate_step])
 pipeline_run = Experiment(workspace, 'object-recognition-pipeline').submit(pipeline, pipeline_parameters=pipeline_parameters)
