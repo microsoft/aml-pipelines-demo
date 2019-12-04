@@ -20,6 +20,7 @@ def deploy_step(model_dir, accuracy_file, test_dir, compute_target):
             '--model_dir', model_dir, 
             '--accuracy_file', accuracy_file, 
             '--test_dir', test_dir, 
+            '--scoring_url', scoring_url
         ],
         inputs=[model_dir, accuracy_file, test_dir],
         outputs=outputs,
