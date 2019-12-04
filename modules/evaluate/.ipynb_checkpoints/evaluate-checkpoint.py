@@ -48,7 +48,7 @@ def evaluate_model(model, criterion, dataloader, dataset_size, class_names, devi
     
     return acc
 
-# Define arguments
+ # Define arguments
 parser = argparse.ArgumentParser(description='Evaluate arg parser')
 parser.add_argument('--test_dir', type=str, help='Directory where testing data is stored')
 parser.add_argument('--model_dir', type=str, help='Directory where model is stored')
