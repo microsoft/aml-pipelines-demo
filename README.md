@@ -1,4 +1,4 @@
-## Azure Machine Learning Pipelines Demo
+# Azure Machine Learning Pipelines Demo
 
 An [Azure Machine Learning pipeline](https://docs.microsoft.com/en-us/azure/machine-learning/service/concept-ml-pipelines) is an independently executable workflow of a complete machine learning task. Subtasks are encapsulated as a series of steps within the pipeline. Each step is an executable module of code which can have inputs and produce outputs (which can then be consumed by other steps as inputs). 
 
@@ -13,7 +13,7 @@ There are multiple advantages to using pipelines:
 
 The following repository shows an exampe of how you can use the Azure Machine Learning SDK to create a pipeline. 
 
-### Object Recognition Problem
+## Object Recognition Problem
 
 In order to show the example, we will be training a model that is able to classify objects belonging to a list of categories. We will build our own dataset, train a model on it, and deploy the result to a webservice. More specifically, the pipeline will be split into the following steps.
 
@@ -23,7 +23,7 @@ In order to show the example, we will be training a model that is able to classi
 
 `Output`: Reference to directory containing the raw data.
 
-This step will leverage [Azure Cognitive Services](https://azure.microsoft.com/en-us/services/cognitive-services/) to search the web for images to create our dataset. For this demo, we will use the same 10 classes in the [CIFAR-10 dataset](https://www.cs.toronto.edu/~kriz/cifar.html) (airplane, automobile, bird, cat, deer, dog, frog, horse, ship, truck). All images will be saved into a directory in the inputed datastore reference.
+This step will leverage [Azure Cognitive Services](https://azure.microsoft.com/en-us/services/cognitive-services/) to search the web for images to create our dataset. This replicates the real-world scenario of data being ingested from a constantly changing source. For this demo, we will use the same 10 classes in the [CIFAR-10 dataset](https://www.cs.toronto.edu/~kriz/cifar.html) (airplane, automobile, bird, cat, deer, dog, frog, horse, ship, truck). All images will be saved into a directory in the inputed datastore reference.
 
 #### Step 2: Preprocess Data
 
@@ -57,11 +57,7 @@ This step evaluates the trained model on the testing data and outputs the accura
 
 This step registers and deploys a new model on its first run. In subsequent runs, it will only register and deploy a new model if the training dataset has changed or the dataset did not change, but the accuracy improved.
 
-**The final pipeline should looks like this.**
-
-![](images/pipeline-screenshot.png)
-
-### Prerequisites
+## Prerequisites
 
 #### Create Azure Machine Learning Workspace
 
@@ -87,7 +83,7 @@ Run the following command to install the SDK using pip.
 pip install azureml-sdk
 ```
 
-### Run The Pipeline
+## Run The Pipeline
 
 Run the `object-recognition-pipeline.py` script to execute the pipeline.
 
@@ -96,6 +92,10 @@ python object-recognition-pipeline.py
 ```
 
 To monitor the run and see the results, go to the **[Azure Machine Learning Studio](https://ml.azure.com/)** > *Select your workspace* -> **Experiments** > **object-recognition-pipeline** > *Latest Run ID*.
+
+*The final pipeline should look something like this.*
+
+![](images/pipeline-screenshot.png)
 
 Once the pipeline run finishes successfully, you can test the output by running the `test-endpoint.py` script. (TODO: MAKE SCRIPT)
 
