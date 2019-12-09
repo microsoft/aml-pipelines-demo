@@ -97,8 +97,15 @@ To monitor the run and see the results, go to the **[Azure Machine Learning Stud
 
 ![](images/pipeline-screenshot.png)
 
-Once the pipeline run finishes successfully, you can test the output by running the `test-endpoint.py` script. (TODO: MAKE SCRIPT)
+Once the pipeline run finishes successfully, you can test the output by running the `test-endpoint.py` script.
+
+Here is a sample of an airplane:
 
 ```
-python test-endpoint.py
+python test-endpoint.py --image_url https://compote.slate.com/images/222e0b84-f164-4fb1-90e7-d20bc27acd8c.jpg
+```
+If you want to use a custom image:
+
+```
+python test-endpoint.py --image_url <URL OF IMAGE>
 ```
