@@ -8,6 +8,20 @@ from azureml.pipeline.steps import EstimatorStep
 from azureml.train.dnn import PyTorch
 
 def train_step(train_dir, valid_dir, compute_target):
+    '''
+    This step will fine-tune a RESNET-18 model on our dataset using PyTorch. 
+    It will use the corresponding input image directories as training and validation data.
+
+    :param train_dir: The reference to the directory containing the training data
+    :type train_dir: DataReference
+    :param valid_dir: The reference to the directory containing the validation data
+    :type valid_dir: DataReference
+    :param compute_target: The compute target to run the step on
+    :type compute_target: ComputeTarget
+    
+    :return: The preprocess step, step outputs dictionary (keys: model_dir)
+    :rtype: EstimatorStep, dict
+    '''
 
     num_epochs = PipelineParameter(name='num_epochs', default_value=25)
     batch_size = PipelineParameter(name='batch_size', default_value=16)
@@ -22,6 +36,7 @@ def train_step(train_dir, valid_dir, compute_target):
         is_directory=True)
 
     outputs = [model_dir]
+    outputs_map = { 'model_dir': model_dir }
 
     estimator = PyTorch(
         source_directory=os.path.dirname(os.path.abspath(__file__)),
@@ -46,4 +61,4 @@ def train_step(train_dir, valid_dir, compute_target):
         outputs=outputs,
         allow_reuse=False)
 
-    return step, outputs
+    return step, outputs_map

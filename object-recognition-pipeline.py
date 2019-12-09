@@ -41,16 +41,16 @@ datastore = DataReference(datastore, mode='mount')
 data_ingestion_step, data_ingestion_outputs = data_ingestion_step(datastore, cpu_compute_target)
 
 # Step 2: Data preprocessing 
-data_preprocess_step, data_preprocess_outputs = data_preprocess_step(data_ingestion_outputs[0], cpu_compute_target)
+data_preprocess_step, data_preprocess_outputs = data_preprocess_step(data_ingestion_outputs['raw_data_dir'], cpu_compute_target)
 
 # Step 3: Train Model
-train_step, train_outputs = train_step(data_preprocess_outputs[0], data_preprocess_outputs[1], gpu_compute_target)
+train_step, train_outputs = train_step(data_preprocess_outputs['train_dir'], data_preprocess_outputs['valid_dir'], gpu_compute_target)
 
 # Step 4: Evaluate Model
-evaluate_step, evaluate_outputs = evaluate_step(train_outputs[0], data_preprocess_outputs[2], gpu_compute_target)
+evaluate_step, evaluate_outputs = evaluate_step(train_outputs['model_dir'], data_preprocess_outputs['test_dir'], gpu_compute_target)
 
 # Step 5: Deploy Model
-deploy_step, deploy_outputs = deploy_step(train_outputs[0], evaluate_outputs[0], data_preprocess_outputs[2], cpu_compute_target)
+deploy_step, deploy_outputs = deploy_step(train_outputs['model_dir'], evaluate_outputs['accuracy_file'], data_preprocess_outputs['test_dir'], cpu_compute_target)
 
 # Submit pipeline
 print('Submitting pipeline ...')

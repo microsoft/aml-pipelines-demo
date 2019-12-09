@@ -6,7 +6,9 @@ import torch.nn as nn
 from torchvision import datasets, models, transforms
 
 def load_data(test_dir):
-
+    ''' 
+    Loads the the testing data 
+    '''
     test_transform = transforms.Compose([
         transforms.Resize(200),
         transforms.CenterCrop(200),
@@ -24,7 +26,9 @@ def load_data(test_dir):
     return test_loader, dataset_size, class_names
 
 def evaluate_model(model, criterion, dataloader, dataset_size, class_names, device):
-    
+    ''' 
+    Evaluates the model 
+    '''
     model.eval()
     running_loss = 0.0
     running_corrects = 0

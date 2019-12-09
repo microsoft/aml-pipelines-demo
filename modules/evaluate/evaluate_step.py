@@ -8,6 +8,19 @@ from azureml.pipeline.steps import EstimatorStep
 from azureml.train.dnn import PyTorch
 
 def evaluate_step(model_dir, test_dir, compute_target):
+    '''
+    This step evaluates the trained model on the testing data and outputs the accuracy.
+
+    :param model_dir: The reference to the directory containing the trained model
+    :type model_dir: DataReference
+    :param test_dir: The reference to the directory containing the testing data
+    :type test_dir: DataReference
+    :param compute_target: The compute target to run the step on
+    :type compute_target: ComputeTarget
+    
+    :return: The preprocess step, step outputs dictionary (keys: accuracy_file)
+    :rtype: EstimatorStep, dict
+    '''
 
     accuracy_file = PipelineData(
         name='accuracy_file', 
@@ -17,6 +30,7 @@ def evaluate_step(model_dir, test_dir, compute_target):
         is_directory=False)
 
     outputs = [accuracy_file]
+    outputs_map = { 'accuracy_file': accuracy_file }
     
     estimator = PyTorch(
         source_directory=os.path.dirname(os.path.abspath(__file__)),
@@ -37,4 +51,4 @@ def evaluate_step(model_dir, test_dir, compute_target):
         compute_target=compute_target,
         allow_reuse=False)
 
-    return step, outputs
+    return step, outputs_map
