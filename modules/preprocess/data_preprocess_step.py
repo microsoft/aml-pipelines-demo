@@ -67,7 +67,7 @@ def data_preprocess_step(raw_data_dir, compute_target):
         compute_target=compute_target,
         runconfig=run_config,
         source_directory=os.path.dirname(os.path.abspath(__file__)),
-        allow_reuse=False
+        allow_reuse=True
     )
 
     return step, outputs_map

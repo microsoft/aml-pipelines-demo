@@ -44,7 +44,7 @@ def data_ingestion_step(datastore_reference, compute_target):
         compute_target=compute_target,
         source_directory=os.path.dirname(os.path.abspath(__file__)),
         runconfig=run_config,
-        allow_reuse=False
+        allow_reuse=True
     )
 
     return step, outputs_map

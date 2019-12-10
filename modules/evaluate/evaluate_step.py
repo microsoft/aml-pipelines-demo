@@ -49,6 +49,6 @@ def evaluate_step(model_dir, test_dir, compute_target):
         inputs=[model_dir, test_dir],
         outputs=outputs,
         compute_target=compute_target,
-        allow_reuse=False)
+        allow_reuse=True)
 
     return step, outputs_map
